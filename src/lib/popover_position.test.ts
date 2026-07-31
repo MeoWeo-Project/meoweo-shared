@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { anchorTo } from './popover_position';
+import { anchorTo } from './popover_position.js';
 
 const VIEWPORT = { width: 1280, height: 800 };
 const MIN_WIDTH = 180;

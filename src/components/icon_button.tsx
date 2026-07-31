@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { color, primaryButton } from '../tokens';
+import { color, primaryButton } from '../tokens.js';
 
 type IconBtnProps = {
   onClick: () => void;

@@ -1,4 +1,4 @@
-import { color, font, inkAlpha, primaryAlpha } from '../tokens';
+import { color, font, inkAlpha, primaryAlpha } from '../tokens.js';
 
 type ToggleRowProps = {
   label: string;

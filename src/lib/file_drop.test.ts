@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { fileDropReducer, IDLE_FILE_DROP } from './file_drop';
+import { fileDropReducer, IDLE_FILE_DROP } from './file_drop.js';
 
-import type { FileDropEvent, FileDropState } from './file_drop';
+import type { FileDropEvent, FileDropState } from './file_drop.js';
 
 /** Replay a sequence of events from idle, the way the browser would fire them. */
 function replay(...events: FileDropEvent[]): FileDropState {

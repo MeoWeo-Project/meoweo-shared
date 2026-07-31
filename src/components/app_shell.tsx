@@ -1,10 +1,10 @@
 import { Menu, X, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import type { ReactElement, ReactNode } from 'react';
 
-import { Logo } from './logo';
-import { SidebarNav } from './sidebar_nav';
-import type { NavSection } from './sidebar_nav';
-import { color } from '../tokens';
+import { Logo } from './logo.js';
+import { SidebarNav } from './sidebar_nav.js';
+import type { NavSection } from './sidebar_nav.js';
+import { color } from '../tokens.js';
 
 /** Below this width the sidebar is a drawer, so navigating should close it. */
 const MOBILE_BREAKPOINT_PX = 768;

@@ -1,8 +1,8 @@
 import { useReducer } from 'react';
 import { Upload } from 'lucide-react';
 
-import { fileDropReducer, IDLE_FILE_DROP } from '../lib/file_drop';
-import { color, font, primaryAlpha } from '../tokens';
+import { fileDropReducer, IDLE_FILE_DROP } from '../lib/file_drop.js';
+import { color, font, primaryAlpha } from '../tokens.js';
 
 /** Keeps the box from collapsing when its content is swapped for the prompt. */
 const MIN_HEIGHT = 96;

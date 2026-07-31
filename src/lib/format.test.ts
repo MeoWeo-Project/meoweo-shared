@@ -9,7 +9,7 @@ import {
   formatSpeed,
   outputFileName,
   userInitials,
-} from './format';
+} from './format.js';
 
 describe('formatClockTime', () => {
   it('shows minutes, seconds, and tenths', () => {

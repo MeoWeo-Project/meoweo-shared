@@ -2,9 +2,9 @@ import { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
 
-import { useDismiss } from './use_dismiss';
-import { anchorTo } from '../lib/popover_position';
-import { useIsMobile } from '../lib/use_media_query';
+import { useDismiss } from './use_dismiss.js';
+import { anchorTo } from '../lib/popover_position.js';
+import { useIsMobile } from '../lib/use_media_query.js';
 
 /** Narrowest a menu may be, however small the control that opened it. */
 const MIN_MENU_WIDTH = 180;

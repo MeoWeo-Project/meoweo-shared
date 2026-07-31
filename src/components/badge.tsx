@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { color } from '../tokens';
+import { color } from '../tokens.js';
 
 const SIZES = {
   sm: { fontSize: 9, padding: '1px 6px' },

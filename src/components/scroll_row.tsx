@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { color, inkAlpha } from '../tokens';
+import { color, inkAlpha } from '../tokens.js';
 
 /**
  * `scrollWidth` is fractional and `scrollLeft` is rounded, so an exact comparison leaves a phantom

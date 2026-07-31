@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { ButtonHTMLAttributes } from 'react';
 
-import { primaryButton, font } from '../tokens';
+import { primaryButton, font } from '../tokens.js';
 
 interface PrimaryButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;

@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
-import { MenuSurface } from './menu_surface';
-import { color, font } from '../tokens';
+import { MenuSurface } from './menu_surface.js';
+import { color, font } from '../tokens.js';
 
 export type DropdownOption = {
   value: string;

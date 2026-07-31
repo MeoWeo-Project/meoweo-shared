@@ -1,4 +1,4 @@
-import { color, font, primaryAlpha } from '../tokens';
+import { color, font, primaryAlpha } from '../tokens.js';
 
 export type ChipOption<T> = {
   value: T;

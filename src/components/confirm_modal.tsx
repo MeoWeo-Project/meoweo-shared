@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import { Spinner } from './spinner';
-import { color, dangerAlpha, font, primaryAlpha, primaryButton } from '../tokens';
+import { Spinner } from './spinner.js';
+import { color, dangerAlpha, font, primaryAlpha, primaryButton } from '../tokens.js';
 
 import type { LucideIcon } from 'lucide-react';
 

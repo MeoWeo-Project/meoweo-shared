@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import { glass } from '../tokens';
+import { glass } from '../tokens.js';
 
 interface GlassCardProps {
   children: ReactNode;

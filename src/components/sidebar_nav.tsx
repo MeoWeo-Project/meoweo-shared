@@ -1,8 +1,8 @@
 import type { LucideIcon } from 'lucide-react';
 import type { ReactElement } from 'react';
 
-import { Badge } from './badge';
-import { color, font } from '../tokens';
+import { Badge } from './badge.js';
+import { color, font } from '../tokens.js';
 
 /**
  * One sidebar entry. Generic over the screen identifier so each suite keeps its own screen union

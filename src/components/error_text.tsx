@@ -1,4 +1,4 @@
-import { color, font } from '../tokens';
+import { color, font } from '../tokens.js';
 
 type ErrorTextProps = {
   children: React.ReactNode;

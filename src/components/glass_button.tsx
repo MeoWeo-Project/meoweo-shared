@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 
-import { color, font } from '../tokens';
+import { color, font } from '../tokens.js';
 
 type GlassButtonProps = {
   icon: LucideIcon;

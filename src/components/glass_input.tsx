@@ -1,6 +1,6 @@
 import type { InputHTMLAttributes, ReactNode } from 'react';
 
-import { glass, color, dangerAlpha, font } from '../tokens';
+import { glass, color, dangerAlpha, font } from '../tokens.js';
 
 interface GlassInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;

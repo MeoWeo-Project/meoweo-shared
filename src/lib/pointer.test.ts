@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { fractionAt } from './pointer';
+import { fractionAt } from './pointer.js';
 
 const RECT = { left: 100, width: 200 };
 

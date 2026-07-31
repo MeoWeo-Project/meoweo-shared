@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 
-import type { SliderConfig } from '../lib/slider_config';
-import { color, font } from '../tokens';
+import type { SliderConfig } from '../lib/slider_config.js';
+import { color, font } from '../tokens.js';
 
 /** Travel of the fader, in pixels. The rotated input is laid out as a track of this length. */
 const FADER_LENGTH = 120;
