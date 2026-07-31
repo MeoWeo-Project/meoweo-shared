@@ -1,0 +1,942 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #af1055;
+  --color-primary-dark: #9c0e4a;
+  --color-primary-light: #c41860;
+
+  --color-bg-page: #f5f2fa;
+  --color-bg-glass: rgba(255, 255, 255, 0.16);
+  --color-bg-glass-strong: rgba(255, 255, 255, 0.28);
+
+  --color-text-base: #160820;
+  --color-text-secondary: #4a3860;
+  --color-text-muted: #8878a0;
+
+  --color-border-glass: rgba(255, 255, 255, 0.55);
+  --color-border-glass-top: rgba(255, 255, 255, 0.92);
+  --color-border-subtle: rgba(200, 180, 230, 0.35);
+
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+
+  --radius-card: 24px;
+  --radius-button: 14px;
+  --radius-input: 14px;
+  --radius-badge: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--color-bg-page);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+input,
+textarea,
+select {
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(175, 16, 85, 0.45) !important;
+  box-shadow:
+    inset 4px 4px 14px rgba(130, 100, 170, 0.13),
+    inset -2px -2px 9px rgba(255, 255, 255, 0.95),
+    0 0 0 3px rgba(175, 16, 85, 0.09) !important;
+}
+
+::placeholder {
+  color: rgba(140, 120, 170, 0.7);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(175, 16, 85, 0.18);
+  border-radius: 4px;
+}
+
+pre,
+code {
+  font-family: var(--font-mono);
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+/* Glass buttons (sidebar footer) */
+.btn-glass {
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.btn-glass:hover:not(:disabled) {
+  filter: brightness(1.14) saturate(1.1);
+  transform: translateY(-2px);
+}
+.btn-glass:active:not(:disabled) {
+  filter: brightness(0.91);
+  transform: scale(0.96) translateY(0px);
+  transition-duration: 0.05s;
+}
+
+/* Sidebar nav buttons */
+.btn-nav {
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* Text-only link buttons */
+.btn-text-link {
+  transition: opacity 0.15s ease;
+}
+.btn-text-link:hover {
+  opacity: 0.7;
+}
+.btn-text-link:active {
+  opacity: 0.5;
+}
+
+/* Custom checkbox focus ring */
+.custom-checkbox:focus-visible {
+  outline: 2px solid rgba(175, 16, 85, 0.5);
+  outline-offset: 2px;
+  border-radius: 5px;
+}
+
+/* ── Responsive app layout ─────────────────────────────── */
+.app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-sidebar {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.app-sidebar.sidebar-open {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.app-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-width: 0;
+}
+
+/* Padded content wrapper — mobile-first */
+.app-content-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px 16px 60px;
+}
+
+/* Mobile top bar — hidden on desktop by default */
+.app-topbar {
+  display: none;
+}
+
+/* Desktop sidebar toggle row — hidden on mobile by default */
+.sidebar-toggle-row {
+  display: none;
+}
+
+/* Mobile overlay backdrop — hidden by default */
+.sidebar-overlay {
+  display: none;
+}
+
+/* Mobile close button inside sidebar — hidden by default */
+.sidebar-mobile-close {
+  display: none;
+}
+
+/* ── Mobile (< 768px) ─────────────────────────────────── */
+@media (max-width: 767px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 200;
+    width: 244px;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .app-sidebar.sidebar-open {
+    transform: translateX(0);
+  }
+
+  .app-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    background: rgba(245, 242, 250, 0.92);
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+  }
+
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: rgba(22, 8, 32, 0.35);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  .sidebar-mobile-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 13px;
+    right: 13px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(74, 56, 96, 0.7);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .sidebar-mobile-close:hover {
+    background: rgba(255, 255, 255, 0.55);
+  }
+}
+
+/* ── Desktop (≥ 768px) ────────────────────────────────── */
+@media (min-width: 768px) {
+  .app-sidebar {
+    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .app-sidebar.sidebar-open {
+    width: 244px;
+  }
+
+  .app-sidebar:not(.sidebar-open) {
+    width: 0;
+  }
+
+  .sidebar-toggle-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px 6px;
+    flex-shrink: 0;
+  }
+
+  .app-content-inner {
+    padding: 6px 28px 60px;
+  }
+}
+
+/* Sidebar toggle button (desktop) */
+.sidebar-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(200, 185, 225, 0.35);
+  color: rgba(74, 56, 96, 0.6);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  color: #160820;
+}
+
+/* ── User menu trigger ─────────────────────────────────── */
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.user-menu-trigger:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.user-menu-trigger:active {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.user-menu-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-top-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.04em;
+}
+
+.user-menu-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.user-menu-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-base);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-email {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-chevron {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-menu-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* ── Desktop popover ────────────────────────────────────── */
+.user-menu-popover {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-top-color: rgba(255, 255, 255, 0.94);
+  border-radius: 16px;
+  box-shadow:
+    0 24px 64px rgba(80, 50, 130, 0.14),
+    0 4px 12px rgba(80, 50, 130, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  overflow: hidden;
+  animation: menuFadeSlideUp 0.18s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes menuFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Menu items ─────────────────────────────────────────── */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-radius: 9px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+}
+
+.menu-item:hover {
+  background: rgba(175, 16, 85, 0.06);
+  color: var(--color-text-base);
+}
+
+.menu-item--destructive {
+  color: var(--color-primary);
+}
+
+.menu-item--destructive:hover {
+  background: rgba(175, 16, 85, 0.08);
+  color: var(--color-primary);
+}
+
+.menu-item--disabled {
+  opacity: 0.38;
+  cursor: default;
+  pointer-events: none;
+}
+
+.menu-divider {
+  height: 1px;
+  background: rgba(200, 180, 230, 0.28);
+  margin: 2px 10px;
+}
+
+/* ── Mobile bottom sheet ────────────────────────────────── */
+.bottom-sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: rgba(22, 8, 32, 0.4);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  animation: fadeInBackdrop 0.2s ease both;
+}
+
+@keyframes fadeInBackdrop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.bottom-sheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(245, 242, 250, 0.97);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border-top: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -20px 60px rgba(80, 50, 130, 0.12);
+  padding-bottom: max(env(safe-area-inset-bottom), 20px);
+  animation: slideUpSheet 0.25s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: rgba(160, 130, 200, 0.28);
+  border-radius: 2px;
+  margin: 12px auto 6px;
+}
+
+/* ── Shared modal ───────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  background: rgba(22, 8, 32, 0.38);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeInBackdrop 0.18s ease both;
+}
+
+/* The panel's glass was inline-styled identically in every modal; it belongs here, once. */
+.modal-panel {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-top-color: rgba(255, 255, 255, 0.94);
+  border-radius: 24px;
+  box-shadow:
+    0 28px 80px rgba(80, 50, 130, 0.15),
+    0 8px 24px rgba(80, 50, 130, 0.07),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
+  padding: 32px 32px 28px;
+  max-width: 400px;
+  width: calc(100% - 32px);
+  animation: modalEnter 0.22s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.modal-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.modal-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+
+.modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #160820;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: #8878a0;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 11px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #4a3860;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+/* These were injected inline by two screens, with different definitions, while status_badge used
+   `spin` without declaring it at all – so its spinner only turned when one of those screens
+   happened to be mounted. */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* ── Screen header ──────────────────────────────────────── */
+.screen-header {
+  margin-bottom: 24px;
+}
+
+/* Scales with the viewport instead of being pinned to a pixel. */
+.screen-title {
+  font-size: clamp(21px, 5.5vw, 25px);
+  font-weight: 700;
+  color: #160820;
+  margin: 0 0 7px;
+  letter-spacing: -0.02em;
+}
+
+.screen-subtitle {
+  font-size: clamp(13px, 3.6vw, 14px);
+  color: #4a3860;
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* ── Voice Clone ────────────────────────────────────────── */
+/* Mobile first: two side-by-side buttons do not fit at 375px, so they stack full-width. */
+.voice-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* One voice per row on a phone, so each is a full-width tap target. */
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .voice-actions {
+    flex-direction: row;
+  }
+
+  .voice-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+/* ── Edit tools (audio editor) ──────────────────────────── */
+/* Track/thumb need range pseudo-elements, unreachable from inline styles. The filled portion
+   is driven per-instance through --fill-pct. */
+.glass-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  /* If a browser ever falls back to its native control, it is at least the brand's colour. */
+  accent-color: var(--color-primary);
+  flex: 1;
+  min-width: 0;
+  height: 8px;
+  margin: 0;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    var(--color-primary) var(--fill-pct, 0%),
+    rgba(175, 16, 85, 0.12) var(--fill-pct, 0%)
+  );
+  box-shadow: inset 1px 1px 3px rgba(130, 100, 170, 0.14);
+  outline: none;
+  cursor: pointer;
+}
+
+.glass-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-primary);
+  box-shadow: 4px 4px 10px rgba(130, 100, 180, 0.18), -2px -2px 6px rgba(255, 255, 255, 0.97);
+}
+
+.glass-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-primary);
+  box-shadow: 4px 4px 10px rgba(130, 100, 180, 0.18), -2px -2px 6px rgba(255, 255, 255, 0.97);
+}
+
+.glass-slider:focus-visible {
+  box-shadow:
+    inset 1px 1px 3px rgba(130, 100, 170, 0.14),
+    0 0 0 3px rgba(175, 16, 85, 0.2);
+}
+
+/* A fader is the slider above, stood on its end. `appearance: slider-vertical` would have been the
+   obvious way to do this, but it silently discards ::-webkit-slider-thumb - which is why the EQ
+   came out in Chrome's default blue. Rotating keeps every custom style, and keeps a fader from ever
+   drifting away from the sliders beside it. */
+.fader {
+  position: relative;
+  width: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fader .glass-slider {
+  position: absolute;
+  flex: none;
+  transform: rotate(-90deg);
+  transform-origin: center;
+}
+
+/* Looks like the glass input the native select used to; opens a real menu instead of the OS one. */
+.dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 92px;
+  padding: 8px 12px;
+  border-radius: var(--radius-input);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-top-color: rgba(200, 185, 225, 0.5);
+  background: rgba(255, 255, 255, 0.28);
+  box-shadow: inset 4px 4px 14px rgba(130, 100, 170, 0.11), inset -2px -2px 9px rgba(255, 255, 255, 0.92);
+  color: var(--color-text-base);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dropdown-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dropdown-trigger:focus-visible {
+  outline: none;
+  box-shadow:
+    inset 4px 4px 14px rgba(130, 100, 170, 0.11),
+    0 0 0 3px rgba(175, 16, 85, 0.2);
+}
+
+.dropdown-chevron {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+  transition: transform 0.2s ease;
+}
+
+.dropdown-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* The scrolling half of ScrollRow. Its own scrollbar is hidden because the arrows say the same thing
+   more clearly, and a scrollbar under a row of tabs reads as a mistake. */
+.scroll-row {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ten tools do not fit a phone, so the row scrolls sideways inside a ScrollRow. */
+.tool-tabs {
+  display: flex;
+  gap: 4px;
+  padding-bottom: 2px;
+}
+
+/* Ten faders do not fit a phone, so the desk scrolls rather than shrinking each band. */
+.eq-faders {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+/* Format select and export button stack full-width on a phone. */
+.export-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  /* The format belongs next to the button it applies to, not across the card from it. */
+  .export-bar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
+
+/* ── Volume dock ────────────────────────────────────────── */
+/* Bottom-right on every screen. Below the mobile drawer (199) on purpose: with the drawer open, the
+   dock belongs under its overlay like everything else, not floating on top of it. */
+.volume-dock {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 150;
+}
+
+.volume-dock-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 16px rgba(80, 50, 130, 0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.volume-dock-button:hover {
+  transform: scale(1.05);
+}
+
+.volume-dock-button:focus-visible {
+  outline: none;
+  box-shadow: 0 4px 16px rgba(80, 50, 130, 0.18), 0 0 0 3px rgba(175, 16, 85, 0.2);
+}
+
+/* ── Settings page ──────────────────────────────────────── */
+.settings-layout {
+  display: flex;
+  gap: 24px;
+}
+
+.settings-sidebar {
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  width: 152px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.settings-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  background: none;
+  border: none;
+  border-radius: 9px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: background 0.12s, color 0.12s;
+}
+
+.settings-tab-btn:hover {
+  background: rgba(175, 16, 85, 0.05);
+  color: var(--color-text-base);
+}
+
+.settings-tab-btn--active {
+  background: rgba(175, 16, 85, 0.09);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.settings-mobile-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 12px;
+}
+
+.settings-mobile-tab {
+  flex: 1;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+
+.settings-mobile-tab--active {
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--color-primary);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(80, 50, 130, 0.08);
+}
+
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (min-width: 768px) {
+  .settings-sidebar {
+    display: flex;
+  }
+
+  .settings-mobile-tabs {
+    display: none;
+  }
+}
+
+/* User avatar chip in mobile top bar */
+.topbar-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #af1055;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
